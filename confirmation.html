@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmed - Lucky Scoop</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fff9fb;
+            color: #4a4049;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .confirmation-card {
+            background: #ffffff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(224, 187, 228, 0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            border: 1px solid #f5e6ed;
+        }
+        .success-icon {
+            font-size: 50px;
+            color: #28a745;
+            margin-bottom: 15px;
+        }
+        h2 {
+            font-size: 22px;
+            color: #4a4049;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 14px;
+            color: #5d4a5d;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .order-details {
+            background: #fcf8fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5e6ed;
+            text-align: left;
+            font-size: 13px;
+        }
+        .order-details p {
+            margin: 6px 0;
+            color: #4a4049;
+        }
+        .btn-home {
+            background-color: #c99d48;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s ease;
+        }
+        .btn-home:hover {
+            background-color: #b0873c;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="confirmation-card">
+        <div class="success-icon">✅</div>
+        <h2>Order Placed Successfully!</h2>
+        <p>Shukriya! Aapka order receive ho gaya hai. Humari team jald hi aapse rabta karegi.</p>
+        
+        <div class="order-details">
+            <p><strong>Order ID:</strong> #<span id="order-id">10294</span></p>
+            <p><strong>Estimated Delivery:</strong> 3 to 4 Days</p>
+            <p><strong>Status:</strong> Processing (Cash on Delivery)</p>
+        </div>
+
+        <a href="index.html" class="btn-home">Back to Home</a>
+    </div>
+
+    <script>
+        // Automatic random Order ID generate karne ke liye script
+        const randomId = Math.floor(100000 + Math.random() * 900000);
+        document.getElementById('order-id').innerText = randomId;
+    </script>
+
+</body>
+</html>
