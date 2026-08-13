@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Order Now</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .checkout-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .order-summary {
+            background: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .order-summary h3 {
+            margin-top: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 16px;
+            color: #000;
+            border-top: 1px solid #ccc;
+            padding-top: 8px;
+            margin-top: 8px;
+        }
+        .btn-submit {
+            background-color: #f08fa5;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .btn-submit:hover {
+            background-color: #f44ca0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="checkout-container">
+    <h2>Checkout Details</h2>
+    
+    <form action="#" method="POST">
+        <!-- Billing Details -->
+        <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" placeholder="Aapka poora naam" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="03XXXXXXXXX" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Delivery Address</label>
+            <textarea id="address" name="address" rows="3" placeholder="Street address, City, Area" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="payment">Payment Method</label>
+            <select id="payment" name="payment">
+                <option value="cod">Cash on Delivery (COD)</option>
+                <option value="online">Online Payment / Bank Transfer</option>
+            </select>
+        </div>
+
+        <div class="order-summary">
+            <h3>Order Summary</h3>
+            <div class="summary-item">
+                <span id="checkout-title">Product Name</span>
+                <span id="checkout-price">Rs. 0.00</span>
+            </div>
+            <div class="summary-item">
+                <span>Shipping Charges</span>
+                <span>Rs. 280</span>
+            </div>
+            <div class="summary-item total">
+                <span>Total Amount</span>
+                <span id="checkout-total">Rs. 280</span>
+            </div>
+        </div>
+
+        <!-- Order Confirm Button -->
+        <button type="submit" id="order-btn" class="btn-submit">Order Confirm</button>
+    </form>
+</div>
+
+<script>
+    // URL se product details fetch karna
+    const params = new URLSearchParams(window.location.search);
+    const title = params.get('title');
+    const priceStr = params.get('price');
+
+    if (title && priceStr) {
+        document.getElementById('checkout-title').innerText = title;
+        document.getElementById('checkout-price').innerText = priceStr;
+
+        // Total calculate karne ke liye (Rs. nikal kar math perform karna)
+        let numericPrice = parseInt(priceStr.replace(/[^0-9]/g, '')) || 0;
+        let shipping = 280; // Updated shipping charges
+        let total = numericPrice + shipping;
+
+        document.getElementById('checkout-total').innerText = 'Rs. ' + total;
+    }
+
+    // Order Confirm button click handler to redirect to confirmation page
+    document.getElementById('order-btn').addEventListener('click', function(event) {
+        event.preventDefault(); // Form refresh rokne ke liye
+        window.location.href = 'confirmation.html';
+    });
+</script>
+
+</body>
+</html>

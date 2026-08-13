@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail - Lucky Scoop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fff9fb;
+            color: #4a4049;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(224, 187, 228, 0.2);
+            border: 1px solid #f5e6ed;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #c99d48;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .product-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 600px) {
+            .product-detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .product-img-box {
+            width: 100%;
+            height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #f5e6ed;
+            background-color: #fcf8fa;
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info-box h1 {
+            font-size: 22px;
+            color: #4a4049;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e67e22;
+            margin-bottom: 15px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: #5d4a5d;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .action-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-cart, .btn-buy {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: 1px solid #4a4049;
+            text-align: center;
+            transition: opacity 0.2s;
+        }
+
+        .btn-cart {
+            background-color: #ffffff;
+            color: #4a4049;
+        }
+
+        .btn-buy {
+            background-color: #ff69b4;
+            color: #ffffff;
+            border-color: #ff69b4;
+        }
+
+        .btn-cart:hover, .btn-buy:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-link">&larr; Back to Products</a>
+        
+        <div class="product-detail-grid">
+            <!-- Product Image -->
+            <div class="product-img-box">
+                <img id="detail-img" src="" alt="Product Image">
+            </div>
+
+            <!-- Product Info -->
+            <div class="product-info-box">
+                <h1 id="detail-title">Loading...</h1>
+                <div class="product-price" id="detail-price">Rs 0.00</div>
+                
+                <p class="product-desc">
+                    High-quality aesthetic product crafted just for you. 100% original, premium finish, and durable with fast 24-hour delivery! ✨
+                </p>
+
+                <div class="action-btns">
+                    <button class="btn-cart">ADD TO CART</button>
+                    <button id="buy-now-btn" class="btn-buy">BUY IT NOW</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            const image = localStorage.getItem('prodImg');
+            const title = localStorage.getItem('prodTitle');
+            const price = localStorage.getItem('prodPrice');
+
+            if (image) document.getElementById('detail-img').src = image;
+            if (title) document.getElementById('detail-title').innerText = title;
+            if (price) document.getElementById('detail-price').innerText = price;
+        };
+
+        // Buy It Now button functionality to redirect to checkout with localStorage data
+        document.getElementById('buy-now-btn').addEventListener('click', function() {
+            const prodImg = localStorage.getItem('prodImg') || '';
+            const prodTitle = localStorage.getItem('prodTitle') || 'Product';
+            const prodPrice = localStorage.getItem('prodPrice') || 'Rs 0.00';
+
+            window.location.href = `checkout.html?title=${encodeURIComponent(prodTitle)}&price=${encodeURIComponent(prodPrice)}&image=${encodeURIComponent(prodImg)}`;
+        });
+    </script>
+
+</body>
+</html>

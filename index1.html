@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Scoop</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fff9fb;
+            color: #4a4049;
+        }
+
+        /* 1. Announcement Bar Styles */
+        .announcement-bar {
+            background-color: #c99d48;
+            color: #ffffff;
+            text-align: center;
+            padding: 8px 15px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 2. Top Marquee Line Styles */
+        .marquee-container {
+            background: linear-gradient(135deg, #ffdfdf, #f9f1f5);
+            color: #5d4a5d;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid #f0d5df;
+        }
+
+        .marquee-container marquee {
+            width: 100%;
+        }
+
+        .marquee-text {
+            display: inline-flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        /* 3. Navigation Bar Styles */
+        .navbar {
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .menu-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: #4a4049;
+            background: none;
+            border: none;
+        }
+
+        .navbar .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #c99d48;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .navbar .search-icon {
+            font-size: 18px;
+            cursor: pointer;
+            color: #4a4049;
+        }
+
+        /* 4. Image Banner Section (Mobile Sized) */
+        .banner-section {
+            width: 100%;
+            background-color: #fff9fb;
+            padding: 20px 0 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .banner-container {
+            width: 100%;
+            max-width: 420px;
+            height: 420px;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .banner-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Carousel dots indicator */
+        .banner-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding-top: 15px;
+        }
+
+        .banner-dots span {
+            width: 6px;
+            height: 6px;
+            background-color: #d1d1d1;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .banner-dots span.active {
+            background-color: #4a4049;
+            width: 16px;
+            border-radius: 4px;
+        }
+
+        /* 5. Bottom Marquee Line Styles */
+        .bottom-marquee {
+            background: linear-gradient(135deg, #f9f1f5, #ffdfdf);
+            color: #5d4a5d;
+            padding: 12px 0;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 10px;
+            border-top: 1px solid #f0d5df;
+            border-bottom: 1px solid #f0d5df;
+        }
+
+        .bottom-marquee marquee {
+            width: 100%;
+        }
+
+        .sticker-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 30px;
+        }
+
+        /* 6. Shop by Categories Section */
+        .categories-section {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 0 15px;
+        }
+
+        .section-heading {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #4a4049;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(224, 187, 228, 0.25);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+            border: 1px solid #f5e6ed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 250px;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .category-img-box {
+            width: 100%;
+            height: 170px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .category-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .category-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #5d4a5d;
+        }
+
+        /* Moving Small Stickers Marquee Styles */
+        .sticker-marquee-section {
+            max-width: 100%;
+            margin: 25px 0;
+            padding: 12px 0;
+            background: linear-gradient(135deg, #fff9fb, #fdf2f7);
+            border-top: 1px solid #f0d5df;
+            border-bottom: 1px solid #f0d5df;
+            overflow: hidden;
+        }
+
+        .sticker-marquee-track {
+            display: inline-flex;
+            gap: 20px;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .marquee-sticker-box {
+            width: 60px;
+            height: 60px;
+            background-color: #ffffff;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(224, 187, 228, 0.3);
+            border: 1px solid #f5e6ed;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .marquee-sticker-box img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        /* Products Grid Styles */
+        .products-section {
+            max-width: 500px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(224, 187, 228, 0.2);
+            border: 1px solid #f5e6ed;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-img-box {
+            width: 100%;
+            height: 180px;
+            overflow: hidden;
+            background-color: #fcf8fa;
+        }
+
+        .product-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 10px 12px 12px 12px;
+        }
+
+        .product-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: #4a4049;
+            margin-bottom: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.3;
+        }
+
+        .product-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: #e67e22;
+        }
+
+        /* Promotional Banner Styles */
+        .promo-banner-section {
+            max-width: 500px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .promo-banner-container {
+            width: 100%;
+            height: 180px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(224, 187, 228, 0.25);
+            border: 1px solid #f5e6ed;
+        }
+
+        .promo-banner-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 3 Brand Cards Styles */
+        .brand-cards-section {
+            max-width: 500px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .brand-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .brand-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(224, 187, 228, 0.25);
+            border: 1px solid #f5e6ed;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .brand-card-img {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            background-color: #fcf8fa;
+        }
+
+        .main-prod-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .brand-top-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 8px;
+            border-radius: 6px;
+            backdrop-filter: blur(4px);
+        }
+
+        .badge-logo {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            border-radius: 3px;
+        }
+
+        .badge-title {
+            font-size: 10px;
+            font-weight: 700;
+            color: #4a4049;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+
+
+        /* FAQ Section Styles */
+.faq-section {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.faq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.faq-item {
+    background-color: #ffffff;
+    border: 1px solid #f5e6ed;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(224, 187, 228, 0.15);
+}
+
+.faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 15px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a4049;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+
+.faq-question:hover {
+    background-color: #fcf8fa;
+}
+
+.faq-question::after {
+    content: '+';
+    font-size: 18px;
+    font-weight: bold;
+    color: #c99d48;
+    transition: transform 0.2s ease;
+}
+
+.faq-item.active .faq-question::after {
+    transform: rotate(45deg);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 15px;
+    font-size: 13px;
+    color: #5d4a5d;
+    line-height: 1.5;
+    background-color: #fff9fb;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 150px;
+    padding: 0 15px 15px 15px;
+}
+
+
+/* Reviews Section Styles */
+.reviews-section {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.reviews-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.review-card {
+    background-color: #ffffff;
+    border: 1px solid #f5e6ed;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 3px 10px rgba(224, 187, 228, 0.15);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.reviewer-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a4049;
+}
+
+.review-stars {
+    color: #ffc107;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.review-text {
+    font-size: 13px;
+    color: #5d4a5d;
+    line-height: 1.4;
+}
+
+
+/* Lucky Scoop Feature Section Styles */
+.lucky-feature-section {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.lucky-feature-box {
+    border: 2px dashed #f0d5df;
+    border-radius: 15px;
+    padding: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(224, 187, 228, 0.2);
+}
+
+.lucky-feature-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4a4049;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+
+.lucky-content-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@media (min-width: 480px) {
+    .lucky-content-grid {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.lucky-img-container {
+    width: 100%;
+    max-width: 200px;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    margin: 0 auto;
+    border: 1px solid #f5e6ed;
+}
+
+.lucky-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lucky-points-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+
+.lucky-points-list li {
+    font-size: 12px;
+    color: #5d4a5d;
+    line-height: 1.4;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+
+/* Footer Styles */
+.site-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #f5e6ed;
+    padding: 40px 20px 20px 20px;
+    color: #4a4049;
+    font-size: 13px;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.footer-col h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4a4049;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-logo {
+    font-size: 18px;
+    font-weight: 700;
+    color: #c99d48;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.footer-col ul li a {
+    color: #5d4a5d;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #c99d48;
+}
+
+.footer-contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #5d4a5d;
+}
+
+.social-icons {
+    display: flex;
+    gap: 12px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.social-icons a {
+    width: 32px;
+    height: 32px;
+    background-color: #fcf8fa;
+    border: 1px solid #f5e6ed;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a4049;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.social-icons a:hover {
+    background-color: #f0d5df;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #f5e6ed;
+    padding-top: 15px;
+    font-size: 12px;
+    color: #8c7b89;
+}
+
+
+.trust-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 40px 20px;
+    background-color: #fff;
+    flex-wrap: wrap;
+}
+
+.trust-badge {
+    text-align: center;
+    max-width: 150px;
+}
+
+.trust-icon {
+    width: 65px;
+    height: 65px;
+    background-color: #f3e8f8; /* Light purple aesthetic color */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    margin: 0 auto 12px auto;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.trust-badge p {
+    font-size: 13px;
+    color: #4a4049;
+    line-height: 1.4;
+    margin: 0;
+}
+
+
+.vibe-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.vibe-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.vibe-btn {
+    display: inline-block;
+    background-color: #ff3399;
+    color: white;
+    padding: 12px 35px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    border-radius: 4px;
+    margin-bottom: 30px;
+}
+
+.vibe-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+/* Peechay pink heart shape ya background effect */
+.big-pink-heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 250px;
+    background-color: #ffb6c1; /* Light pink aesthetic color */
+    clip-path: polygon(50% 15%, 61% 2%, 78% 2%, 91% 15%, 91% 35%, 75% 58%, 50% 85%, 25% 58%, 9% 35%, 9% 15%, 22% 2%, 39% 2%);
+    z-index: 1;
+    opacity: 0.6;
+}
+
+.vibe-images-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    z-index: 2; /* Images ko heart ke upar rakhne ke liye */
+}
+
+.vibe-card {
+    max-width: 320px;
+    width: 100%;
+}
+
+/* Thora sa books/pages ki tarah cross style dene ke liye */
+.card-left {
+    transform: rotate(-6deg);
+}
+
+.card-right {
+    transform: rotate(6deg);
+}
+
+.vibe-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+.vibe-section {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #ffffff;
+    overflow: hidden;
+}
+
+.vibe-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.vibe-btn-container {
+    margin-bottom: 30px;
+}
+
+.vibe-btn {
+    display: inline-block;
+    background-color: #ff3399;
+    color: white;
+    padding: 12px 35px;
+    font-size: 15px;
+    font-weight: bold;
+    text-decoration: none;
+    border: 2px solid #000;
+    box-shadow: 4px 4px 0px #000;
+    border-radius: 4px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.vibe-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px #000;
+}
+
+.vibe-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.big-pink-heart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px;
+    height: 280px;
+    background-color: #ffb6c1;
+    clip-path: polygon(50% 15%, 61% 2%, 78% 2%, 91% 15%, 91% 35%, 75% 58%, 50% 85%, 25% 58%, 9% 35%, 9% 15%, 22% 2%, 39% 2%);
+    z-index: 1;
+    opacity: 0.6;
+}
+
+.vibe-images-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    z-index: 2;
+    flex-wrap: wrap;
+}
+
+.vibe-card {
+    max-width: 300px;
+    width: 100%;
+}
+
+.card-left {
+    transform: rotate(-6deg);
+}
+
+.card-right {
+    transform: rotate(6deg);
+}
+
+.vibe-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+    </style>
+</head>
+<body>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        24 Hours Delivery | Available on Daraz & Interested
+    </div>
+
+    <!-- Top Marquee Line -->
+    <div class="marquee-container">
+        <marquee behavior="scroll" direction="left" scrollamount="5">
+            <span class="marquee-text">
+                ✨ Welcome to Lucky Scoop 💖 
+                🌸 Special Discount on All Items 🎀 
+                🧸 Grab Your Favorite Aesthetic Goodies Now ⭐ 
+                🎁 Free Gift on Orders Over $50 ✨
+            </span>
+        </marquee>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <button class="menu-icon">&#9776;</button>
+        <div class="logo">Lucky Scoop</div>
+        <div class="search-icon">&#128269;</div>
+    </nav>
+
+    <!-- Image Banner Section -->
+    <section class="banner-section">
+        <div class="banner-container">
+            <img src="qw.jpeg" alt="Lucky Scoop Banner">
+        </div>
+        <!-- Slide Dots -->
+        <div class="banner-dots">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </section>
+
+    <!-- Bottom Marquee Line with Stickers/Emojis -->
+    <div class="bottom-marquee">
+        <marquee behavior="scroll" direction="left" scrollamount="4">
+            <span class="marquee-text">
+                <span class="sticker-item">🛍️ Limited Time Offer</span>
+                <span class="sticker-item">💖 100% Original Products</span>
+                <span class="sticker-item">✨ New Aesthetic Collection</span>
+                <span class="sticker-item">🎀 Shop with Confidence</span>
+                <span class="sticker-item">⭐ Best Quality Guaranteed</span>
+            </span>
+        </marquee>
+    </div>
+
+   <!-- Shop by Categories Section -->
+    <section class="categories-section">
+        <h2 class="section-heading">Shop by Categories</h2>
+        <div class="categories-grid">
+            
+            <!-- Card 1: Lip Gloss -->
+            <div class="category-card" onclick="window.location.href='product-detail.html?image=download.jpeg&title=Lip%20Gloss&price=Rs%20300.00'">
+                <div class="category-img-box">
+                    <img src="download.jpeg" alt="Lip Gloss">
+                </div>
+                <div class="category-name">Lip Gloss</div>
+            </div>
+
+            <!-- Card 2: Highlighter -->
+            <div class="category-card" onclick="window.location.href='product-detail.html?image=download%20(1).jpeg&title=Highlighter&price=Rs%20450.00'">
+                <div class="category-img-box">
+                    <img src="download (1).jpeg" alt="Highlighter">
+                </div>
+                <div class="category-name">Highlighter</div>
+            </div>
+
+            <!-- Card 3: Eyeshades Palette -->
+            <div class="category-card" onclick="window.location.href='product-detail.html?image=Rose%20Bomb🌹💥.jpeg&title=Eyeshades%20Palette&price=Rs%20850.00'">
+                <div class="category-img-box">
+                    <img src="Rose Bomb🌹💥.jpeg" alt="Eyeshades Palette">
+                </div>
+                <div class="category-name">Eyeshades Palette</div>
+            </div>
+
+            <!-- Card 4: Bridal deal -->
+            <div class="category-card" onclick="window.location.href='product-detail.html?image=deal.jpeg&title=Bridal%20Deal&price=Rs%202500.00'">
+                <div class="category-img-box">
+                    <img src="deal.jpeg" alt="Bridal deal">
+                </div>
+                <div class="category-name">Bridal deal</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Moving Small Stickers Marquee Section -->
+    <div class="sticker-marquee-section">
+        <marquee behavior="scroll" direction="left" scrollamount="4">
+            <div class="sticker-marquee-track">
+                <div class="marquee-sticker-box"><img src="cherry1.jpeg" alt="Sticker 1"></div>
+                <div class="marquee-sticker-box"><img src="butterfly.jpeg" alt="Sticker 2"></div>
+                <div class="marquee-sticker-box"><img src="mine.jpeg" alt="Sticker 3"></div>
+                <div class="marquee-sticker-box"><img src="er.jpeg" alt="Sticker 4"></div>
+                <div class="marquee-sticker-box"><img src="cycle.jpeg" alt="Sticker 5"></div>
+                <div class="marquee-sticker-box"><img src="sprinkle1.jpeg" alt="Sticker 6"></div>
+            </div>
+        </marquee>
+    </div>
+
+    <!-- First 6 Products Grid Section -->
+    <section class="products-section">
+        <div class="products-grid">
+            
+            <!-- Card 1 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=twinkle.jpeg&title=Twinkle%20Eraser&price=Rs%20250.00'">
+                <div class="product-img-box">
+                    <img src="twinkle.jpeg" alt="Product 1">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Twinkle Eraser</div>
+                    <div class="product-price">Rs 250.00</div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=puff.jpeg&title=Makeup%20Puff&price=Rs%20100.00'">
+                <div class="product-img-box">
+                    <img src="puff.jpeg" alt="Product 2">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Makeup Puff</div>
+                    <div class="product-price">Rs 100.00</div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=pocket1.jpeg&title=Pocket%20Perfume&price=Rs%20200.00'">
+                <div class="product-img-box">
+                    <img src="pocket1.jpeg" alt="Product 3">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Pocket Perfume</div>
+                    <div class="product-price">Rs 200.00</div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=curlor.jpeg&title=Eyeshades%20Curlor&price=Rs%20220.00'">
+                <div class="product-img-box">
+                    <img src="curlor.jpeg" alt="Product 4">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Eyeshades Curlor</div>
+                    <div class="product-price">Rs 220.00</div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=paper%20soaps.jpeg&title=Paper%20Soap&price=Rs%20120.00'">
+                <div class="product-img-box">
+                    <img src="paper soaps.jpeg" alt="Product 5">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Paper soap</div>
+                    <div class="product-price">Rs 120.00</div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=flowerclip.jpeg&title=Flowerclip&price=Rs%20150.00'">
+                <div class="product-img-box">
+                    <img src="flowerclip.jpeg" alt="Product 6">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">flowerclip</div>
+                    <div class="product-price">Rs 150.00</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Promotional Banner Section -->
+    <section class="promo-banner-section">
+        <div class="promo-banner-container">
+            <img src="rt.jpg" alt="Special Promotional Banner">
+        </div>
+    </section>
+
+    <!-- Trust Badges Section -->
+<div class="trust-section">
+    <div class="trust-badge">
+        <div class="trust-icon">❤️</div>
+        <p><strong>5000+ customer</strong> reviews</p>
+    </div>
+    <div class="trust-badge">
+        <div class="trust-icon">👥</div>
+        <p><strong>100k + followers</strong> on Instagram</p>
+    </div>
+    <div class="trust-badge">
+        <div class="trust-icon">🚚</div>
+        <p><strong>8000+ order</strong> shipped</p>
+    </div>
+</div>
+<!-- Our Vibe Section -->
+<div class="vibe-section">
+    <h2 class="vibe-title">OUR VIBE !!</h2>
+    
+    <!-- Shop Now Button ko yahan heading ke neechay rakha hai -->
+    <div class="vibe-btn-container">
+        <a href="#products" class="vibe-btn">SHOP NOW</a>
+    </div>
+    
+    <div class="vibe-wrapper">
+        <div class="big-pink-heart"></div>
+        <div class="vibe-images-container">
+            <div class="vibe-card card-left">
+                <img src="we.jpeg" alt="Success Mode Vibe" class="vibe-img">
+            </div>
+            <div class="vibe-card card-right">
+                <img src="success1.jpeg" alt="Girl's Superpower Vibe" class="vibe-img">
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Next 6 Products Grid Section -->
+    <section class="products-section">
+        <div class="products-grid">
+            
+            <!-- Card 1 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=paint.jpeg&title=Diamond%20Painting&price=Rs%20250.00'">
+                <div class="product-img-box">
+                    <img src="paint.jpeg" alt="Product 1">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Diamond Painting</div>
+                    <div class="product-price">Rs 250.00</div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=paint2.jpeg&title=Jewelry%20Organizer&price=Rs%20400.00'">
+                <div class="product-img-box">
+                    <img src="paint2.jpeg" alt="Product 2">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Jewelry organizer</div>
+                    <div class="product-price">Rs 400.00</div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=paint3.jpeg&title=Mini%20Straightener&price=Rs%20750.00'">
+                <div class="product-img-box">
+                    <img src="paint3.jpeg" alt="Product 3">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Mini straightener</div>
+                    <div class="product-price">Rs 750.00</div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=paint4.jpeg&title=Mini%20Wipes&price=Rs%20150.00'">
+                <div class="product-img-box">
+                    <img src="paint4.jpeg" alt="Product 4">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Mini Wipes</div>
+                    <div class="product-price">Rs 150.00</div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=paint5.jpeg&title=Character%20Pen&price=Rs%20180.00'">
+                <div class="product-img-box">
+                    <img src="paint5.jpeg" alt="Product 5">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">Character pen</div>
+                    <div class="product-price">Rs 180.00</div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="product-card" onclick="window.location.href='product-detail.html?image=paint6.jpeg&title=Stationary%20Set&price=Rs%20280.00'">
+                <div class="product-img-box">
+                    <img src="paint6.jpeg" alt="Product 6">
+                </div>
+                <div class="product-info">
+                    <div class="product-title">stationary set</div>
+                    <div class="product-price">Rs 280.00</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- Main Heading -->
+<h2 style="font-size: 20px; font-weight: 700; color: #4a4049; margin: 20px 15px 10px 15px; text-align: center;">Beautiful charming bracelets</h2>
+
+<div class="products-section">
+    <div class="products-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+
+        <!-- Card 1 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand1.jpeg" alt="Bracelet 1"></div>
+            <div class="product-info">
+                <div class="product-title">Charming Bracelet</div>
+                <div class="product-price">Rs 250.00</div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand2.jpeg" alt="Bracelet 2"></div>
+            <div class="product-info">
+                <div class="product-title">Pearl Beaded Elegant Bracelet</div>
+                <div class="product-price">Rs 250.00</div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand3.jpeg" alt="Bracelet 3"></div>
+            <div class="product-info">
+                <div class="product-title">Cherry  Bracelet</div>
+                <div class="product-price">Rs 250.00</div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand4.jpeg" alt="Bracelet 4"></div>
+            <div class="product-info">
+                <div class="product-title">Minimalist  Bracelet</div>
+                <div class="product-price">Rs 400.00</div>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand5.jpeg" alt="Bracelet 5"></div>
+            <div class="product-info">
+                <div class="product-title">Charm  Bracelet</div>
+                <div class="product-price">Rs 450.00</div>
+            </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand6.jpeg" alt="Bracelet 6"></div>
+            <div class="product-info">
+                <div class="product-title">Heart Pendant Cute Bracelet</div>
+                <div class="product-price">Rs 500.00</div>
+            </div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand7.jpeg" alt="Bracelet 7"></div>
+            <div class="product-info">
+                <div class="product-title"> Magnetic Bracelet</div>
+                <div class="product-price">Rs 520.00</div>
+            </div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand8.jpeg" alt="Bracelet 8"></div>
+            <div class="product-info">
+                <div class="product-title">Butterfly Magnetic Pair</div>
+                <div class="product-price">Rs 500.00</div>
+            </div>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand9.jpeg" alt="Bracelet 9"></div>
+            <div class="product-info">
+                <div class="product-title">Cute Bracelet</div>
+                <div class="product-price">Rs 270.00</div>
+            </div>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="product-card">
+            <div class="product-img-box"><img src="hand10.jpeg" alt="Bracelet 10"></div>
+            <div class="product-info">
+                <div class="product-title">Normal  Wear Bracelet</div>
+                <div class="product-price">Rs 250.00</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+    <section class="faq-section">
+    <h2 class="section-heading">Frequently Asked Questions</h2>
+    <div class="faq-container">
+        
+        <!-- FAQ 1 -->
+        <div class="faq-item">
+            <button class="faq-question">Delivery mein kitna time lagta hai?</button>
+            <div class="faq-answer">Humari delivery 3 to 4 days ke andar ho jati hai. Aap apni order status kabhi bhi check kar sakti hain.</div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+            <button class="faq-question">Kya products 100% original hain?</button>
+            <div class="faq-answer">Ji haan! Humare tamam products 100% original, high-quality aur aesthetic standards ke mutabiq hote hain.</div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+            <button class="faq-question">Payment ke kya tareeqay hain?</button>
+            <div class="faq-answer">Hum Cash on Delivery (COD) aur online bank transfer dono options provide karte hain.</div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+            <button class="faq-question">Order return ya exchange ho sakta hai?</button>
+            <div class="faq-answer">Agar product damaged ya wrong nikle toh aap easily exchange ya return karwa sakti hain.</div>
+        </div>
+
+    </div>
+</section>
+
+
+<section class="lucky-feature-section">
+    <div class="lucky-feature-box">
+        <h3 class="lucky-feature-title">BRING SMILES WITH LUCKY SCOOP</h3>
+        <div class="lucky-content-grid">
+            
+            <!-- Left Side Image -->
+            <div class="lucky-img-container">
+                <img src="hii.jpeg" alt="Lucky Scoop Cute Cat">
+            </div>
+
+            <!-- Right Side Points (Same layout as reference) -->
+            <ul class="lucky-points-list">
+                <li>✨ Transform your day with Lucky Scoop's adorable aesthetic collection.</li>
+                <li>💖 Carefully curated cute goodies designed to brighten up your everyday space.</li>
+                <li>🧸 Helps spread joy, comfort, and positive vibes in every single corner.</li>
+                <li>⭐ Premium quality items that make the perfect gift for yourself and loved ones.</li>
+                <li>🎀 Fast 24-hour delivery right to your doorstep with love and care.</li>
+            </ul>
+
+        </div>
+    </div>
+</section>
+
+<section class="reviews-section">
+    <h2 class="section-heading">Customer Reviews ⭐</h2>
+    <div class="reviews-grid">
+        
+        <!-- Review 1 -->
+        <div class="review-card">
+            <div class="review-header">
+                <span class="reviewer-name">Ayesha Khan</span>
+                <span class="review-stars">★★★★★</span>
+            </div>
+            <p class="review-text">"Products itne pyaray aur 100% original thay! Delivery bhi sirf 24 hours mein mil gayi. Highly recommended!"</p>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card">
+            <div class="review-header">
+                <span class="reviewer-name">Fatima Malik</span>
+                <span class="review-stars">★★★★★</span>
+            </div>
+            <p class="review-text">"Quality buhat zabardast hai aur packaging bhi bohat aesthetic thi. Main phir se zaroor order karungi."</p>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card">
+            <div class="review-header">
+                <span class="reviewer-name">Zainab Ahmed</span>
+                <span class="review-stars">★★★★☆</span>
+            </div>
+            <p class="review-text">"Customer service bohat achi thi aur product bilkul waisa hi nikla jaisa picture mein dikhaya gaya tha."</p>
+        </div>
+
+        <!-- Review 4 -->
+        <div class="review-card">
+            <div class="review-header">
+                <span class="reviewer-name">Mahnoor Riaz</span>
+                <span class="review-stars">★★★★★</span>
+            </div>
+            <p class="review-text">"Mujhe sab se achi baat yeh lagi ke delivery waqt par hui aur item ki quality ekdam premium hai. 10/10 experience!"</p>
+        </div>
+
+        <!-- Review 5 -->
+        <div class="review-card">
+            <div class="review-header">
+                <span class="reviewer-name">Nimra Tariq</span>
+                <span class="review-stars">★★★★★</span>
+            </div>
+            <p class="review-text">"Bohat hi cute aur useful items hain. Sab ko yeh store zaroor try karna chahiye, main bohat satisfied hoon."</p>
+        </div>
+
+    </div>
+</section>
+
+
+<footer class="site-footer">
+    <div class="footer-container">
+        
+        <!-- Column 1: Brand Info -->
+        <div class="footer-col">
+            <div class="footer-logo">Lucky Scoop</div>
+            <p style="color: #5d4a5d; line-height: 1.4; margin-bottom: 15px;">Your ultimate destination for cute aesthetic goodies, trendy stationery, and surprise scoops!</p>
+        </div>
+
+        <!-- Column 2: Quick Links -->
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#faqs">FAQs</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Column 3: Help & Support (Policies) -->
+        <div class="footer-col">
+            <h3>Help & Support</h3>
+            <ul>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="shipping-policy.html">Shipping Policy</a></li>
+                <li><a href="terms.html">Terms & Conditions</a></li>
+               
+            </ul>
+        </div>
+
+        <!-- Column 4: Follow Us & Contact -->
+        <div class="footer-col">
+            <h3>Follow Us</h3>
+            <div class="social-icons">
+                <a href="https://instagram.com" target="_blank" title="Instagram">IG</a>
+                <a href="https://facebook.com" target="_blank" title="Facebook">FB</a>
+                <a href="https://whatsapp.com" target="_blank" title="WhatsApp">WA</a>
+            </div>
+            
+            <h3 style="margin-top: 15px;">Get In Touch</h3>
+            <div class="footer-contact-info">
+                <span>📞 +92 3374996212</span>
+                <span>📧 support@luckyscoop.com</span>
+                <span>📍 Islamabad, Pakistan</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom Copyright -->
+    <div class="footer-bottom">
+        <p>&copy; 2026 Lucky Scoop. All Rights Reserved.</p>
+    </div>
+</footer>
+
+
+<Script>
+ document.addEventListener('DOMContentLoaded', function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        question.addEventListener('click', () => {
+            // Baqi sab ko band karne ke liye (optional):
+            faqItems.forEach(otherItem => {
+                if (otherItem !== item) {
+                    otherItem.classList.remove('active');
+                }
+            });
+            // Current item ko toggle karne ke liye:
+            item.classList.toggle('active');
+        });
+    });
+}); 
+
+
+
+
+
+
+
+
+
+</Script>
+</body>
+</html>
